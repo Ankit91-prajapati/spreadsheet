@@ -11,6 +11,7 @@ const Table = () => {
     {
       id: 1,
       job: "Launch social media campaign for pro...",
+      submitted :"3-1-2024",
       status: "In-process",
       submitter: "Aisha Patel",
       url: "www.aishapatel.com",
@@ -22,6 +23,7 @@ const Table = () => {
     {
       id: 2,
       job: "Update press kit for company redesign",
+      submitted :"30-1-2024",
       status: "Need to start",
       submitter: "Irfan Khan",
       url: "www.irfankhanportfolio.com",
@@ -33,6 +35,7 @@ const Table = () => {
     {
       id: 3,
       job: "Finalize user testing feedback for app...",
+      submitted :"30-1-2024",
       status: "In-process",
       submitter: "Mark Johnson",
       url: "www.markjohnsondesigns.com",
@@ -44,10 +47,11 @@ const Table = () => {
     {
       id: 4,
       job: "Design new features for the website",
+      submitted :"30-1-2024",
       status: "In-process",
-      submitter: "",
-      url: "",
-      assigned: "",
+      submitter: "Emily Green",
+      url: "www.emilygreenart.com",
+      assigned: "Tom Wright",
       priority: "Low",
       dueDate: "30-01-2025",
       value: "2,800,000",
@@ -55,39 +59,20 @@ const Table = () => {
     {
       id: 5,
       job: "Prepare financial report for Q4",
+      submitted :"30-1-2024",
       status: "Complete",
-      submitter: "",
-      url: "",
-      assigned: "",
-      priority: "",
+      submitter: "Jessica Brown",
+      url: "www.jessicabrowncreative.com",
+      assigned: "Kevin Smith",
+      priority: "Low",
       dueDate: "10-01-2025",
-      value: "",
+      value: "2,800,000",
     },
-    {
-      id: 6,
-      job: "",
-      status: "Complete",
-      submitter: "",
-      url: "www.jessicabrown.com",
-      assigned: "",
-      priority: "",
-      dueDate: "25-01-2025",
-      value: "",
-    },
-    {
-      id: 7,
-      job: "",
-      status: "Blocked",
-      submitter: "",
-      url: "",
-      assigned: "",
-      priority: "",
-      dueDate: "",
-      value: "",
-    },
+   
     ...Array.from({ length: 17 }, (_, i) => ({
       id: i + 8,
       job: "",
+      submitted :"",
       status: "",
       submitter: "",
       url: "",
@@ -128,6 +113,7 @@ const Table = () => {
 
   const columns = useMemo<ColumnDef<any, any>[]>(
     () => [
+      
       {
         header: "Job Request",
         accessorKey: "job",
@@ -146,7 +132,7 @@ const Table = () => {
                   onBlur={handleCellBlur}
                   onKeyDown={handleKeyDown}
                   autoFocus
-                  className="w-full px-1 border rounded"
+                  className="w-[256px] p-2 border rounded"
                 />
               ) : (
                 <div 
@@ -160,6 +146,38 @@ const Table = () => {
           );
         },
       },
+
+      
+
+           {
+        header: "Submitted",
+        accessorKey: "submitted",
+        cell: (info) => {
+          const isEditing = editingCell?.rowId === info.row.original.id && 
+                           editingCell?.columnId === "submitted";
+          
+          return isEditing ? (
+            <input
+              type="date"
+              value={editValue}
+              onChange={handleCellChange}
+              onBlur={handleCellBlur}
+              onKeyDown={handleKeyDown}
+              autoFocus
+              className="w-full px-1 border rounded"
+            />
+          ) : (
+            <div 
+              onClick={() => handleCellClick(info.row.original.id, "submitted", info.getValue())}
+              className="min-h-[24px] w-full cursor-pointer"
+            >
+              {info.getValue()}
+            </div>
+          );
+        },
+      },
+      
+
       {
         header: "Status",
         accessorKey: "status",
@@ -419,22 +437,66 @@ const Table = () => {
   });
 
   return (
-    <div className="p-4 bg-white">
-      <table className="w-full border-collapse">
-        <thead>
-          <tr className="bg-gray-100">
-            <th className=" pr-1 pl-2 gap-1 text-left w-[256px] bg-[#EEEEEE]">Job Request</th>
-            <th className="border p-2 text-left">Status</th>
-            <th className="border p-2 text-left">Submitter</th>
-            <th className="border p-2 text-left">URL</th>
-            <th className="border p-2 text-left bg-[#E8F0E9]">Assigned</th>
-            <th className="border p-2 text-left bg-[#EAE3FC]">Priority</th>
-            <th className="border p-2 text-left bg-[#EAE3FC]">Due Date</th>
-            <th className="border p-2 text-left bg-[#FFE9E0]">Ext. Value</th>
-          </tr>
-        </thead>
-        <tbody>
-          {table.getRowModel().rows.map((row) => (
+   <div className=" bg-white w-[1440px] overflow-x-auto">
+  <table className="w-full border-separate border-spacing-0 text-xs">
+    <thead>
+      <tr className="text-gray-600 font-medium">
+        <th className="bg-[#EEEEEE] text-left pr-1 pl-2 gap-1 w-[256px] border-r">
+          <div className="flex flex-row items-center w-[220]px  gap-1">
+            <img src="/briefcase.png" alt="briefcase" className="w-4 h-4" />
+            <span className="
+            w-[200px] h-4">Job Request</span>
+              <img src="/dropdown.png" alt="dropdown" className="w-3 h-3 ml-auto" /> 
+          
+          </div>
+
+           
+        </th>
+         
+          <th className="bg-[#EEEEEE] text-left px-3 py-2 w-[124px] border-r">
+          <div className="flex items-center gap-1">
+            <img src="/calender.png" alt="briefcase" className="w-4 h-4" />
+            <span>Submitted</span>
+            <img src="/dropdown.png" alt="dropdown" className="w-3 h-3 ml-auto" />
+          </div>
+        </th>
+
+       
+
+        <th className="bg-[#F5F5F5] text-left px-3 py-2 border-r">
+          <div className="flex items-center gap-1">
+            <img src="/calender.png" alt="calendar" className="w-4 h-4" />
+            <span>Status</span>
+            <img src="/dropdown.png" alt="dropdown" className="w-3 h-3 ml-auto" />
+          </div>
+        </th>
+        <th className="bg-[#F5F5F5] text-left px-3 py-2 border-r">
+          <div className="flex items-center gap-1">
+            <img src="/person.png" alt="status" className="w-3 h-4 text-[#AFAFAF]" />
+            <span>Submitter</span>
+            <img src="/dropdown.png" alt="dropdown" className="w-3 h-3 ml-auto" />
+          </div>
+        </th>
+       <th className="bg-[#F5F5F5] text-left px-3 py-2 border-r">
+          <div className="flex items-center gap-1">
+            <img src="/globe.png" alt="url" className="w-4 h-4" />
+            <span>URL</span>
+            <img src="/dropdown.png" alt="dropdown" className="w-3 h-3 ml-auto" />
+          </div>
+        </th>
+        <th className="bg-[#F5F5F5] text-left px-3 py-2 border-r">
+          <div className="flex items-center gap-1">
+            <span>Assigned</span>
+            <img src="/dropdown.png" alt="dropdown" className="w-3 h-3 ml-auto" />
+          </div>
+        </th>
+        <th className="bg-[#E8F0E9] text-left px-3 py-2 border-r">Priority</th>
+        <th className="bg-[#EAE3FC] text-left px-3 py-2 border-r">Due Date</th>
+        <th className="bg-[#FFE9E0] text-left px-3 py-2">Est. Value</th>
+      </tr>
+    </thead>
+    <tbody>
+       {table.getRowModel().rows.map((row) => (
             <tr key={row.id} className="border-b hover:bg-gray-50">
               {row.getVisibleCells().map((cell) => (
                 <td key={cell.id} className="border p-2">
@@ -443,14 +505,15 @@ const Table = () => {
               ))}
             </tr>
           ))}
-        </tbody>
-      </table>
-      
-      <div className="mt-4 flex justify-between">
+    </tbody>
+  </table>
+    <div className="mt-4 flex justify-between">
         <div className="text-sm">
         </div>
       </div>
-    </div>
+</div>
+
+       
   );
 };
 
